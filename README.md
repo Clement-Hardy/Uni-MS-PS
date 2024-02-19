@@ -68,6 +68,6 @@ python inference_folder.py --path_obj YOUR_PATH/DiLiGenT/pmsData --nb_img 6 --cu
 or for a single object
 
 ```
-python inference_folder.py --path_obj YOUR_PATH/DiLiGenT/pmsData/ballPNG --nb_img 6 --cuda
+python inference_file.py --path_obj YOUR_PATH/DiLiGenT/pmsData/ballPNG --nb_img 6 --cuda
 ```
 
