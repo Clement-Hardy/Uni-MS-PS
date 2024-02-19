@@ -31,7 +31,7 @@ The following python package are necessry to run the test:
 - SciPy
 - numpy
 
-The code has been run with the following vesion:
+The code has been run with the following version:
 - Python 3==3.8.11
 - PyTorch==1.12.1
 - OpenCV==4.8.0.74
