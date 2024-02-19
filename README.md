@@ -30,6 +30,7 @@ The following python package are necessry to run the test:
 - Pillow
 - SciPy
 - numpy
+- timm
 
 The code has been run with the following version:
 - Python 3==3.8.11
@@ -38,6 +39,7 @@ The code has been run with the following version:
 - Pillow==9.0.1
 - SciPy==1.7.1
 - numpy==1.22.4
+- timm=0.6.7
 
 
 ## Pretrained Models
