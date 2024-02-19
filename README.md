@@ -44,7 +44,7 @@ The code has been run with the following version:
 
 ## Pretrained Models
 Weights of the network are available at: https://www.dropbox.com/scl/fi/ooziuv2wrgp6cm703zs9r/model.pth?rlkey=xd6dnsqisfqt6967xdg2chncd&dl=0.
-Extract them and place it in the folder weights
+Extract it and place it in the folder weights
 
 ## Running the Test
 To run the inference on a single object, execute `inference_file.py` with the following command:
