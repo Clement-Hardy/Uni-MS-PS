@@ -41,7 +41,7 @@ The code has been run with the following vesion:
 
 
 ## Pretrained Models
-Weights of the network are available at: https://www.dropbox.com/s/yu8h6g0zp07mumd/checkpoint.zip?dl=0.
+Weights of the network are available at: https://www.dropbox.com/scl/fi/ooziuv2wrgp6cm703zs9r/model.pth?rlkey=xd6dnsqisfqt6967xdg2chncd&dl=0.
 Extract them and place it in the folder weights
 
 ## Running the Test
