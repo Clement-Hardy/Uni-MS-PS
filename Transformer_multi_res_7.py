@@ -21,13 +21,13 @@ class Transformer_multi_res_7(nn.Module):
         super(Transformer_multi_res_7, self).__init__()
         
         self.eval_mode = eval_mode
-        self.Net_first = Transformer_8(c_in=3,
+        self.Net_first = Transformer_8(c_in=c_in,
                                        dim_hidden=[64, 128, 256, 512],
                                        eval_mode=eval_mode,
                                        batch_size_encoder=batch_size_encoder,
                                        batch_size_transformer=batch_size_transformer)
-
-        self.Net_stage = Transformer_8(c_in=6,
+        c_in+=3
+        self.Net_stage = Transformer_8(c_in=c_in,
                                        dim_hidden=[64, 128, 256, 512],
                                        eval_mode=eval_mode,
                                        batch_size_encoder=batch_size_encoder,

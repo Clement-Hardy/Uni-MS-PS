@@ -11,13 +11,15 @@ parser.add_argument("--folder_save", type=str,
 parser.add_argument("--path_obj", type=str,
                     required=True, help= 'path_to_imgs')
 parser.add_argument('--cuda', action='store_true')
+parser.add_argument('--calibrated', action='store_true')
 args = parser.parse_args()
         
 
 mode_inference = True
 model = load_model(path_weight="weights",
                    cuda=args.cuda,
-                   mode_inference=mode_inference)
+                   mode_inference=mode_inference,
+                   calibrated=args.calibrated)
 
 for folder in os.listdir(args.path_obj):
     obj_name = folder
@@ -30,4 +32,5 @@ for folder in os.listdir(args.path_obj):
         path_obj=path_obj,
         nb_img=args.nb_img,
         folder_save=args.folder_save,
-        obj_name=obj_name)
+        obj_name=obj_name,
+        calibrated=args.calibrated)

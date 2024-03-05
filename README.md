@@ -43,7 +43,7 @@ The code has been run with the following version:
 
 
 ## Pretrained Models
-Weights of the network are available at: https://www.dropbox.com/scl/fi/ooziuv2wrgp6cm703zs9r/model.pth?rlkey=xd6dnsqisfqt6967xdg2chncd&dl=0.
+Weights of the network are available at: https://www.dropbox.com/scl/fi/ooziuv2wrgp6cm703zs9r/model_uncalibrated.pth?rlkey=xd6dnsqisfqt6967xdg2chncd&dl=0 for the Universal version and https://www.dropbox.com/scl/fi/ux2uqx50bujzcaca9ht00/model_calibrated.pth?rlkey=m4qp4rcow99oxyrvkck9snz5l&dl=0 for the calibrated version.
 Extract it and place it in the folder weights
 
 ## Running the Test
@@ -58,7 +58,12 @@ By default, the results are place in the folder inference, this could be change 
 --folder_save SAVE_PATH
 ```
 
+The ```--calibrated``` option allows the use of the calibrated version of the neural network.
+
 The images could be in png, jpg or in TIFF format, a mask of the object could be also provided, it should be place on the images's folder name as mask.png. 
+
+For the calibrated version, a light_directions.txt should be provided, the format of this file should be the same as the ones in the DiLiGenT dataset.
+The names of images should be numbers, for example, 1.png is associated with the first row in the light_directions.txt file, 2.png with the second row, and so on.
 
 #### Example on DiLiGenT
 Download the DiLiGenT dataset here: https://sites.google.com/site/photometricstereodata/single , extract it and then run for all objects:
@@ -72,4 +77,5 @@ or for a single object
 ```
 python inference_file.py --path_obj YOUR_PATH/DiLiGenT/pmsData/ballPNG --nb_img 6 --cuda
 ```
+
 

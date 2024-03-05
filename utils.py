@@ -83,6 +83,7 @@ def get_nb_stage(shape):
     
 def load_imgs_mask(path, 
                    nb_img,
+                   calibrated=False,
                    do_padding=True,
                    zoom_mask=True, 
                    filenames=None,
@@ -190,15 +191,45 @@ def load_imgs_mask(path,
                        0)
     imgs = torch.from_numpy(imgs).unsqueeze(0).float()
     
+    if calibrated:
+        dirs_file = os.path.join(path,
+                                 "light_directions.txt")
+        dirs_all = np.loadtxt(dirs_file)
+        dirs = []
+        for key in files:
+            key = int(key.split(".")[0])-1
+            d = dirs_all[key]
+            dirs.append([d[0],
+                         d[1],
+                         d[2]])
+        
+        dirs = np.array(dirs)
+        dirs = torch.from_numpy(dirs).movedim(1,0).unsqueeze(0)
+        dirs.unsqueeze_(-1).unsqueeze_(-1)
+        
+        dirs = dirs.expand_as(imgs)[:,:,:,:]
+    
+        imgs = torch.cat([imgs, dirs], 1).float()
+    
+    
     mask = torch.from_numpy(mask).unsqueeze(0).unsqueeze(0)
     
     return imgs, mask, padding, [x_min, x_max_pad, y_min, y_max_pad], original_shape
 
 
 
-def load_model(path_weight, cuda, mode_inference=False):   
-    file_weight = os.path.join(path_weight, "model.pth")
-    model = Transformer_multi_res_7()
+def load_model(path_weight, cuda,
+               calibrated, mode_inference=False): 
+    if calibrated:
+        file_weight = os.path.join(path_weight, "model_calibrated.pth")
+    else:
+        file_weight = os.path.join(path_weight, "model_uncalibrated.pth")
+    
+    if calibrated:
+        model = Transformer_multi_res_7(c_in=6)
+    else:
+        model = Transformer_multi_res_7(c_in=3)
+        
     model.load_weights(file=file_weight)
     model.eval()
     if mode_inference:
