@@ -50,7 +50,7 @@ Place them in the weights folder.
 To run the inference on a single object, execute `inference_file.py` with the following command:
 
 ```
-python inference_folder.py --path_obj PATH_OF_YOUR_FOLDER --nb_img NB_IMG_TO_USE
+python inference_file.py --path_obj PATH_OF_YOUR_FOLDER --nb_img NB_IMG_TO_USE
 ```
 add ``` --cuda``` if you want to use cuda\
 By default, the results are place in the folder inference, this could be change by using the argument
