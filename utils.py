@@ -68,11 +68,9 @@ def depadding(img, padding):
                   padding[0]:]
     return img
 
-
 def normal_to_rgb(img):
     return (((img+1)/2)*255).astype(np.uint8)
-
-    
+   
 
 def get_nb_stage(shape):
     max_shape = np.max(shape)
@@ -84,10 +82,7 @@ def get_nb_stage(shape):
 def load_imgs_mask(path, 
                    nb_img,
                    calibrated=False,
-                   do_padding=True,
-                   zoom_mask=True, 
                    filenames=None,
-                   masking=True,
                    max_size=None):
     
     if filenames is None:
@@ -95,44 +90,6 @@ def load_imgs_mask(path,
     else:
         possible_file = filenames
 
-    mask = cv2.imread(os.path.join(path, "mask.png"))
-    if not masking:
-        mask = np.ones(mask.shape, 
-                       dtype=np.uint8)
-    
-    if max_size is not None:
-        if mask.shape[0]>max_size or mask.shape[1]>max_size:
-            mask = cv2.resize(mask,
-                              (max_size, max_size))
-            
-    original_shape = mask.shape
-    
-    if zoom_mask:
-        coord = np.argwhere(mask[:,:,0]>0)
-        x_min, x_max = np.min(coord[:,0]), np.max(coord[:,0])
-        y_min, y_max = np.min(coord[:,1]), np.max(coord[:,1])
-
-        x_max_pad = mask.shape[0] - x_max
-        y_max_pad = mask.shape[1] - y_max
-        
-        mask = mask[x_min:x_max,
-                    y_min:y_max]
-        
-    nb_stage = get_nb_stage(mask.shape)
-    size_img = 32*2**(nb_stage-1)
-    
-    if do_padding:
-        mask, _ = resize_with_padding(mask,
-                                      expected_size=(size_img,
-                                                     size_img))
-    else:
-        mask = resize(mask,
-                      expected_size=(size_img,
-                                     size_img))
-    mask = (mask>0)
-    mask = mask[:,:,0]
-    
-    imgs = []
     temp = []
     
     for file in possible_file:
@@ -144,6 +101,45 @@ def load_imgs_mask(path,
             temp.append(file)
         elif ".JPG" in file and "mask" not in file and "Normal" not in file and "normal" not in file:
             temp.append(file)
+            
+            
+    file_mask = os.path.join(path, "mask.png")
+    if os.path.exists(file_mask):
+        mask = cv2.imread(file_mask)
+    else:
+        file_img_example = os.path.join(path, temp[0])
+        img_example = cv2.imread(file_img_example)
+        mask = np.ones(img_example.shape, 
+                       dtype=np.uint8)
+    
+    if max_size is not None:
+        if mask.shape[0]>max_size or mask.shape[1]>max_size:
+            mask = cv2.resize(mask,
+                              (max_size, max_size))
+            
+    original_shape = mask.shape
+    
+    coord = np.argwhere(mask[:,:,0]>0)
+    x_min, x_max = np.min(coord[:,0]), np.max(coord[:,0])
+    y_min, y_max = np.min(coord[:,1]), np.max(coord[:,1])
+
+    x_max_pad = mask.shape[0] - x_max
+    y_max_pad = mask.shape[1] - y_max
+        
+    mask = mask[x_min:x_max,
+                y_min:y_max]
+        
+    nb_stage = get_nb_stage(mask.shape)
+    size_img = 32*2**(nb_stage-1)
+    
+    mask, _ = resize_with_padding(mask,
+                                      expected_size=(size_img,
+                                                     size_img))
+    mask = (mask>0)
+    mask = mask[:,:,0]
+    
+    
+    imgs = []
             
     if nb_img is None or nb_img>=len(temp) or nb_img==-1:
         files = np.array(temp)
@@ -164,17 +160,12 @@ def load_imgs_mask(path,
                 img = cv2.resize(img,
                                  (max_size, max_size))
                 
-        if zoom_mask:
-            img = img[x_min:x_max,
-                      y_min:y_max]
+        img = img[x_min:x_max,
+                  y_min:y_max]
             
-        if do_padding:
-            img, padding = resize_with_padding(img=img,
-                                               expected_size=(size_img, size_img))
-        else:
-            img = resize(img, expected_size=(size_img,
-                                             size_img))
-            padding = (0, 0, 0, 0)
+        img, padding = resize_with_padding(img=img,
+                                           expected_size=(size_img, size_img))
+
         
         img = img.astype(np.float32)
         mean_img = np.mean(img, -1)
