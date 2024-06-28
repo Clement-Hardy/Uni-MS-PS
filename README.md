@@ -43,7 +43,7 @@ The code has been run with the following version:
 
 
 ## Pretrained Models
-Weights of the network are available at: https://www.dropbox.com/scl/fi/ooziuv2wrgp6cm703zs9r/model_uncalibrated.pth?rlkey=xd6dnsqisfqt6967xdg2chncd&dl=0 for the Universal version and https://www.dropbox.com/scl/fi/ux2uqx50bujzcaca9ht00/model_calibrated.pth?rlkey=m4qp4rcow99oxyrvkck9snz5l&dl=0 for the calibrated version.
+Weights of the network are available at: https://drive.google.com/file/d/1scrTLjQCz0yJPecBMaaCqto2gDFrcCkE/view?usp=sharing for the Universal version and https://drive.google.com/file/d/1rM1Z0gVtDZvy6g0X9Jhc9rrHmd4tsP9F/view?usp=sharing for the calibrated version.
 Place them in the weights folder.
 
 ## Running the Test
