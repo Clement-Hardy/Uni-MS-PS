@@ -9,21 +9,18 @@ Univ, UNICAEN, CNRS, ENSICAEN, GREYC laboratory, Caen, France)
 https://clement-hardy.github.io/Uni-MS-PS/index.html
 
 **Abstract:**
-Photometric Stereo (PS) addresses the challenge of reconstructing a three-dimensional (3D) repre-
-sentation of an object by estimating the 3D normals at all points on the object’s surface. This is
+Photometric Stereo (PS) addresses the challenge of reconstructing a three-dimensional (3D) representation of an object by estimating the 3D normals at all points on the object’s surface. This is
 achieved through the analysis of at least three photographs, all taken from the same viewpoint but
 with distinct lighting conditions. This paper introduces a novel approach for Universal PS, i.e.,
 when both the active lighting conditions and the ambient illumination are unknown. Our method
-employs a multi-scale encoder-decoder architecture based on Transformers that allows to accom-
-modates images of any resolutions as well as varying number of input images. We are able to
-scale up to very high resolution images like 6000 pixels by 8000 pixels without losing perfor-
-mance and maintaining a decent memory footprint. Moreover, experiments on publicly available
+employs a multi-scale encoder-decoder architecture based on Transformers that accommodates images of any resolution as well as a varying number of input images. We are able to
+scale up to very high resolution images like 6000 pixels by 8000 pixels without losing performance while maintaining a decent memory footprint. Moreover, experiments on publicly available
 datasets establish that our proposed architecture improves the accuracy of the estimated normal
 field by a significant factor compared to state-of-the-art methods.
 
 
 ### Install Dependencies
-The following python package are necessry to run the test:
+The following Python packages are necessary to run the tests:
 - Python 3
 - PyTorch
 - OpenCV
@@ -32,14 +29,14 @@ The following python package are necessry to run the test:
 - numpy
 - timm
 
-The code has been run with the following version:
+The code has been run with the following versions:
 - Python 3==3.8.11
 - PyTorch==1.12.1
 - OpenCV==4.8.0.74
 - Pillow==9.0.1
 - SciPy==1.7.1
 - numpy==1.22.4
-- timm=0.6.7
+- timm==0.6.7
 
 
 ## Pretrained Models
@@ -53,17 +50,20 @@ To run the inference on a single object, execute `inference_file.py` with the fo
 python inference_file.py --path_obj PATH_OF_YOUR_FOLDER --nb_img NB_IMG_TO_USE
 ```
 add ``` --cuda``` if you want to use cuda\
-By default, the results are place in the folder inference, this could be change by using the argument
+If `--nb_img` is not provided, all the images in the folder are used; otherwise, the given number of images is randomly chosen among the available ones.
+By default, the results are placed in the inference folder, this can be changed by using the argument
 ```
 --folder_save SAVE_PATH
 ```
 
 The ```--calibrated``` option allows the use of the calibrated version of the neural network.
 
-The images could be in png, jpg or in TIFF format, a mask of the object could be also provided, it should be place on the images's folder name as mask.png. 
+The images can be in png, jpg or TIFF format. A mask of the object can also be provided: it should be placed in the images' folder and named mask.png. 
 
-For the calibrated version, a light_directions.txt should be provided, the format of this file should be the same as the ones in the DiLiGenT dataset.
+For the calibrated version, a light_directions.txt file should be provided, the format of this file should be the same as the ones in the DiLiGenT dataset.
 The names of images should be numbers, for example, 1.png is associated with the first row in the light_directions.txt file, 2.png with the second row, and so on.
+
+For each object, two files are written in the save folder: `object_name.png` (the estimated normal map, visualized as a color image) and `object_name.mat` (the normal field, stored under the variable `Normal_est`).
 
 #### Example on DiLiGenT
 Download the DiLiGenT dataset here: https://sites.google.com/site/photometricstereodata/single , extract it and then run for all objects:
